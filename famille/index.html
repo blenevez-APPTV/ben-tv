@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Ben TV – Famille</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 560px; margin: 32px auto; padding: 0 16px; line-height: 1.6; color: #1d1d1f; background: #fff; }
+  header { display: flex; align-items: center; gap: 16px; }
+  header img { width: 72px; height: 72px; border-radius: 16px; }
+  h1 { font-size: 1.6em; margin: 0; } h2 { font-size: 1.1em; margin-top: 1.8em; }
+  .bouton { display: block; text-align: center; background: #0a84ff; color: #fff; font-weight: 600; font-size: 1.15em;
+            padding: 16px; border-radius: 14px; text-decoration: none; margin: 24px 0 8px; }
+  .petit { color: #6e6e73; font-size: .9em; }
+</style>
+</head>
+<body>
+<header>
+  <img src="icone-512.png" alt="">
+  <div><h1>Ben TV</h1><div class="petit">Version famille, iPhone et iPad · <span id="version">…</span></div></div>
+</header>
+
+<a class="bouton" href="itms-services://?action=download-manifest&amp;url=https://blenevez-apptv.github.io/ben-tv/famille/manifest.plist">Installer Ben TV</a>
+<p class="petit">À ouvrir dans <strong>Safari</strong> sur l'iPhone ou l'iPad.</p>
+
+<h2>Comment faire</h2>
+<ol>
+  <li>Touchez « Installer Ben TV », puis « Installer » dans la fenêtre qui s'ouvre.</li>
+  <li>Revenez à l'écran d'accueil : l'icône Ben TV se remplit pendant le téléchargement.</li>
+  <li>Ouvrez Ben TV et entrez votre playlist.</li>
+</ol>
+
+<h2>Ça ne marche pas ?</h2>
+<p><strong>« Impossible d'installer » :</strong> votre appareil n'est pas encore enregistré. Envoyez son identifiant (UDID) à Benjamin, il vous dira quand réessayer.</p>
+<p><strong>Mise à jour :</strong> revenez sur cette page (ou Paramètres &gt; Mise à jour dans Ben TV) et réinstallez : vos playlists et vos téléchargements sont gardés.</p>
+<p><strong>Version App Store :</strong> elle ne peut pas être sur le même appareil que celle-ci. Si elle est déjà installée, supprimez-la d'abord.</p>
+
+<script>
+fetch('version.txt').then(r => r.ok ? r.text() : '').then(t => {
+  document.getElementById('version').textContent = t.trim() ? 'version ' + t.trim() : '';
+}).catch(() => { document.getElementById('version').textContent = ''; });
+</script>
+</body>
+</html>
