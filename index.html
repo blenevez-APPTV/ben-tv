@@ -118,7 +118,7 @@
     .story .sticky { align-items:flex-start; padding-top:76px; }
     .words { height:170px; text-align:center; } .word p { margin:0 auto; } .dots { justify-content:center; }
     .screen { height:470px; } .screen img { width:210px; margin:-228px 0 0 -105px; border-radius:24px; }
-    nav a:first-child { display:none; } nav a { margin-left:14px; }
+    nav a:first-child { display:none; } nav a { margin-left:10px; font-size:.85em; } .brand { white-space:nowrap; font-size:1.05em; }
   }
   @media (prefers-reduced-motion:reduce) {
     .float, .track, .icon, .hero .anim { animation:none; } .reveal { opacity:1; transform:none; }
@@ -130,12 +130,13 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
   <symbol id="android" viewBox="0 0 24 24"><g fill="#3ddc84"><path d="M5 10.5a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0zM17 10.5a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0zM7.6 9h8.8v8a1 1 0 0 1-1 1h-.9v2.5a1 1 0 0 1-2 0V18h-1v2.5a1 1 0 0 1-2 0V18h-.9a1 1 0 0 1-1-1zM7.6 8.3a4.4 4.4 0 0 1 8.8 0z"/></g><circle cx="10" cy="6.2" r=".55" fill="#000"/><circle cx="14" cy="6.2" r=".55" fill="#000"/><path d="M8.6 2.6l1 1.6M15.4 2.6l-1 1.6" stroke="#3ddc84" stroke-width=".7" stroke-linecap="round"/></symbol>
+  <symbol id="windows" viewBox="0 0 24 24"><path fill="#3fa9ff" d="M2 4.5l8-1.1v7.7H2zM11 3.3L22 2v9.1H11zM2 12h8v7.7l-8-1.1zM11 12h11v9.9l-11-1.5z"/></symbol>
 </svg>
 
 <header>
   <div class="wrap">
     <a class="brand" href="#"><img src="img/logo.png" alt="">Ben TV</a>
-    <nav><a href="#fonctions">Fonctions</a><a href="https://apps.apple.com/us/app/ben-tv/id6834144206">Apple</a><a href="https://go.aftvnews.com/1960385">Android</a><a href="#assistance">Assistance</a></nav>
+    <nav><a href="#fonctions">Fonctions</a><a href="https://apps.apple.com/us/app/ben-tv/id6834144206">Apple</a><a href="https://go.aftvnews.com/1960385">Android</a><a href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1">PC</a><a href="#assistance">Assistance</a></nav>
   </div>
 </header>
 
@@ -149,6 +150,8 @@
           <svg><use href="#apple"/></svg><span><small>Télécharger dans l'</small><b>App Store</b></span></a>
         <a class="badge" href="https://go.aftvnews.com/1960385" aria-label="Disponible sur Android">
           <svg><use href="#android"/></svg><span><small>Disponible aussi sur</small><b>Android</b></span></a>
+        <a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1" aria-label="Télécharger pour PC Windows">
+          <svg><use href="#windows"/></svg><span><small>Télécharger pour</small><b>PC Windows</b></span></a>
       </div>
     </div>
     <div class="stage" id="stage">
@@ -208,13 +211,13 @@
   <div class="wrap">
     <h2 class="title reveal">Sur tous vos écrans.</h2>
     <div class="tv"><img id="tvimg" src="img/tv-accueil.jpg" alt="Ben TV sur Apple TV"></div>
-    <p class="reveal" style="text-align:center;color:var(--muted);max-width:640px;margin:28px auto 0">iPhone, iPad, Apple TV pensée pour la télécommande, téléphones Android et Fire TV. Même appli, mêmes habitudes.</p>
+    <p class="reveal" style="text-align:center;color:var(--muted);max-width:640px;margin:28px auto 0">iPhone, iPad, Apple TV pensée pour la télécommande, téléphones Android, Fire TV et PC Windows. Même appli, mêmes habitudes.</p>
   </div>
 </section>
 
 <section id="android">
   <div class="wrap">
-    <h2 class="title reveal">Ben TV sur <span class="grad">Android et Fire TV</span></h2>
+    <h2 class="title reveal">Ben TV sur <span class="grad">Android, Fire TV et PC</span></h2>
     <div class="grid">
       <div class="card reveal"><div class="ico">📱</div><h3>Téléphone ou box Android</h3>
         <p>Téléchargez l'appli puis ouvrez le fichier pour l'installer :</p>
@@ -222,6 +225,10 @@
           <svg><use href="#android"/></svg><span><small>Télécharger pour</small><b>Android</b></span></a></p></div>
       <div class="card reveal"><div class="ico">🔥</div><h3>Fire TV Stick</h3>
         <p>Installez l'appli <strong>Downloader</strong> depuis l'Amazon Appstore, puis tapez le code <code>1960385</code>.</p></div>
+      <div class="card reveal"><div class="ico">💻</div><h3>Ordinateur Windows</h3>
+        <p>Téléchargez l'installateur puis ouvrez-le : Ben TV s'installe comme une appli classique.</p>
+        <p style="margin-top:16px"><a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1">
+          <svg><use href="#windows"/></svg><span><small>Télécharger pour</small><b>PC Windows</b></span></a></p></div>
     </div>
   </div>
 </section>
@@ -233,6 +240,8 @@
   <div class="badges reveal">
     <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206"><svg><use href="#apple"/></svg><span><small>Télécharger dans l'</small><b>App Store</b></span></a>
     <a class="badge" href="https://go.aftvnews.com/1960385"><svg><use href="#android"/></svg><span><small>Disponible aussi sur</small><b>Android</b></span></a>
+        <a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1" aria-label="Télécharger pour PC Windows">
+          <svg><use href="#windows"/></svg><span><small>Télécharger pour</small><b>PC Windows</b></span></a>
   </div>
 </div>
 
@@ -253,7 +262,7 @@
   <div class="wrap">
     <p>Ben TV ne fournit aucune chaîne, aucun film ni aucun abonnement : il lit uniquement les playlists dont vous avez les droits d'utilisation. Ben TV n'est affilié à aucun fournisseur de contenu.</p>
     <p>Fiches films et séries : ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</p>
-    <p>Apple, le logo Apple et App Store sont des marques d'Apple Inc. Android est une marque de Google LLC.</p>
+    <p>Apple, le logo Apple et App Store sont des marques d'Apple Inc. Android est une marque de Google LLC. Windows est une marque de Microsoft Corporation.</p>
     <p><a href="confidentialite.html">Confidentialité</a> · <a href="mailto:bentv.assistance@gmail.com">Contact</a> · © 2026 Benjamin Le Nevez</p>
   </div>
 </footer>
