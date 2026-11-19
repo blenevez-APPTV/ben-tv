@@ -107,6 +107,25 @@
   @keyframes brille { 50% { box-shadow:0 0 0 1px rgba(255,255,255,.12), 0 0 100px rgba(255,79,163,.6), 0 0 180px rgba(123,92,255,.4); transform:translateY(-6px); } }
   .dispo .badges { justify-content:center; }
 
+  /* Carte Fire TV : gros code cliquable + télé dessinée */
+  .fire { display:grid; grid-template-columns:1.2fr 1fr; gap:24px; align-items:center; margin-bottom:16px; padding:clamp(22px,5vw,56px);
+    border-radius:28px; border:2px solid #7b5cff; background:radial-gradient(ellipse at 80% 60%, rgba(123,92,255,.25), transparent 60%), linear-gradient(160deg,#17143a,#0b0a1c);
+    box-shadow:0 0 40px rgba(123,92,255,.25); }
+  .fire h3 { font-size:clamp(1.8em,4.5vw,3.2em); margin:0 0 14px; line-height:1.1; white-space:nowrap; }
+  .fire p { font-size:clamp(1.05em,2.2vw,1.6em); color:#e6e4f5; margin:0 0 22px; line-height:1.35; }
+  .fire .code { display:inline-block; white-space:nowrap; font-size:clamp(2.2em,6vw,4em); font-weight:800; letter-spacing:.04em; color:#fff; text-decoration:none;
+    padding:.18em .7em; border-radius:.45em; border:3px solid #9b7bff; background:linear-gradient(135deg,#3a1d8a,#5a2bb8);
+    box-shadow:0 0 30px rgba(123,92,255,.45); transition:transform .25s, box-shadow .25s; }
+  .fire .code:hover { transform:scale(1.04); box-shadow:0 0 50px rgba(155,123,255,.7); }
+  .tvdraw { display:flex; align-items:center; gap:16px; justify-content:center; }
+  .stick { flex:none; padding:8px 14px; border-radius:10px; border:2px solid #9a98ad; background:#1c1b26; font-weight:700; font-size:.9em; white-space:nowrap; }
+  .tvset { position:relative; width:min(100%,300px); padding-bottom:26px; }
+  .tvscreen { aspect-ratio:16/10; border:7px solid #eee; border-radius:12px; background:#fff; color:#111; display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:clamp(1.4em,3.5vw,2.4em); box-shadow:0 20px 40px rgba(123,92,255,.35); }
+  .tvset i { position:absolute; bottom:0; width:6px; height:34px; background:#eee; border-radius:3px; }
+  .tvset i:first-of-type { left:18%; transform:rotate(35deg); } .tvset i:last-of-type { right:18%; transform:rotate(-35deg); }
+  .fire > div { min-width:0; }
+  @media (max-width:760px) { .fire { grid-template-columns:minmax(0,1fr); text-align:center; padding:22px 16px; } .fire h3 { white-space:normal; font-size:1.7em; } .fire .code { font-size:2.3em; } .stick { display:none; } .tvset { width:220px; } }
   code { background:#24243d; padding:2px 8px; border-radius:6px; word-break:break-all; }
   .faq p { margin:0 0 14px; }
   footer { color:var(--muted); font-size:.9em; text-align:center; padding:32px 0 48px; border-top:1px solid #1d1d36; }
@@ -218,13 +237,22 @@
 <section id="android">
   <div class="wrap">
     <h2 class="title reveal">Ben TV sur <span class="grad">Android, Fire TV et PC</span></h2>
+    <div class="fire reveal">
+      <div>
+        <h3><span>🔥</span> Fire TV Stick</h3>
+        <p>Installez l'appli <strong>Downloader</strong> depuis l'Amazon Appstore, puis tapez le code</p>
+        <a class="code" href="https://go.aftvnews.com/1960385" aria-label="Code Downloader 1960385">1960385</a>
+      </div>
+      <div class="tvdraw" aria-hidden="true">
+        <div class="stick">Fire TV</div>
+        <div class="tvset"><div class="tvscreen">Ben TV</div><i></i><i></i></div>
+      </div>
+    </div>
     <div class="grid">
       <div class="card reveal"><div class="ico">📱</div><h3>Téléphone ou box Android</h3>
         <p>Téléchargez l'appli puis ouvrez le fichier pour l'installer :</p>
         <p style="margin-top:16px"><a class="badge" href="https://go.aftvnews.com/1960385">
           <svg><use href="#android"/></svg><span><small>Télécharger pour</small><b>Android</b></span></a></p></div>
-      <div class="card reveal"><div class="ico">🔥</div><h3>Fire TV Stick</h3>
-        <p>Installez l'appli <strong>Downloader</strong> depuis l'Amazon Appstore, puis tapez le code <code>1960385</code>.</p></div>
       <div class="card reveal"><div class="ico">💻</div><h3>Ordinateur Windows</h3>
         <p>Téléchargez l'installateur puis ouvrez-le : Ben TV s'installe comme une appli classique.</p>
         <p style="margin-top:16px"><a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1">
