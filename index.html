@@ -47,7 +47,7 @@
   .badge b { font-size:1.35em; font-weight:600; letter-spacing:-.01em; }
 
   /* Haut de page : texte + téléphones qui flottent en 3D */
-  .hero { min-height:100vh; display:flex; align-items:center; padding:122px 0 40px; position:relative;
+  .hero { overflow:hidden; min-height:100vh; display:flex; align-items:center; padding:122px 0 40px; position:relative;
     background:radial-gradient(ellipse 60% 50% at 75% 40%, rgba(123,92,255,.35), transparent 70%),
                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,79,163,.18), transparent 70%); }
   .hero .wrap { display:grid; grid-template-columns:.85fr 1.15fr; gap:70px; max-width:1360px; align-items:center; width:100%; }
@@ -152,7 +152,19 @@
     .hero { padding-top:100px; text-align:center; } .hero p { margin-left:auto; margin-right:auto; } .hero .badges { justify-content:center; }
     .stage { height:520px; } .pivot { width:180px; height:391px; left:-90px; top:-195px; } .mini { width:88px; margin:-96px 0 0 -44px; border-radius:12px; }
     nav a:first-child { display:none; } nav a { margin-left:10px; font-size:.85em; } .brand { white-space:nowrap; } .brand img { width:56px; height:56px; } header .wrap { height:70px; }
+    /* Téléphone : texte, onglets puis écrans juste dessous (on voit le texte changer en touchant un onglet), boutons à la fin. */
+    .hero { padding:84px 0 30px; min-height:0; }
+    .hero .wrap { display:flex; flex-direction:column; gap:0; }
+    #heroText { display:contents; }
+    #heroText h1 { order:1; font-size:2.1em; min-height:2.1em; margin-bottom:10px; }
+    #heroText p { order:2; font-size:1em; min-height:4.8em; margin-bottom:10px; }
+    #heroText .hint { display:none; }
+    .showcase { order:3; }
+    .hero .badges { order:4; margin-top:10px; }
+    .tabs { gap:6px; } .tab { padding:7px 10px; font-size:.8em; } .tab svg { width:14px; height:14px; }
+    .stage { height:430px; } .pivot { width:160px; height:348px; left:-80px; top:-174px; }
   }
+  @media (max-width:400px) { nav a { margin-left:8px; font-size:.78em; } .brand img { width:48px; height:48px; } }
   @media (prefers-reduced-motion:reduce) {
     .mini, .orb, .icon, .hero .anim, .fond-cols .col, #fonctions .card, .hero .badge::before, nav a { animation:none; } .card3d { transition:none; } .reveal { opacity:1; transform:none; }
   }
