@@ -3,32 +3,307 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ben TV – Assistance</title>
+<title>Ben TV – Lecteur IPTV M3U et Xtream pour iPhone, iPad, Apple TV et Android</title>
+<meta name="description" content="Ben TV : lecteur IPTV gratuit pour vos playlists M3U et comptes Xtream. TV en direct, films, séries, replay, guide TV. iPhone, iPad, Apple TV, Android et Fire TV.">
+<link rel="icon" href="img/logo.png">
+<meta property="og:title" content="Ben TV – Lecteur IPTV M3U et Xtream">
+<meta property="og:description" content="TV en direct, films, séries, replay et guide des programmes, sur iPhone, iPad, Apple TV et Android.">
+<meta property="og:image" content="https://blenevez-apptv.github.io/ben-tv/img/tv-accueil.jpg">
 <style>
-  body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; line-height: 1.6; color: #1d1d1f; background: #fff; }
-  h1 { font-size: 1.6em; } h2 { font-size: 1.15em; margin-top: 1.6em; }
-  code { background: #f2f2f5; padding: 2px 6px; border-radius: 4px; word-break: break-all; }
+  :root { --bg:#07070f; --panel:#13132a; --text:#f4f4fa; --muted:#a3a3b8; --a1:#7b5cff; --a2:#ff4fa3; --a3:#3fa9ff; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; font-family:system-ui,-apple-system,"SF Pro Display","Segoe UI",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; overflow-x:hidden; }
+  a { color:#c9b8ff; }
+  .wrap { max-width:1150px; margin:0 auto; padding:0 16px; }
+  .grad { background:linear-gradient(90deg,var(--a3),var(--a1),var(--a2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+  /* En-tête collant, flouté */
+  header { position:fixed; inset:0 0 auto; z-index:50; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:rgba(7,7,15,.55); border-bottom:1px solid rgba(255,255,255,.06); }
+  header .wrap { display:flex; align-items:center; justify-content:space-between; height:60px; }
+  .brand { display:flex; align-items:center; gap:10px; font-weight:800; font-size:1.2em; color:var(--text); text-decoration:none; }
+  .brand img { width:34px; height:34px; border-radius:9px; }
+  nav a { color:var(--muted); text-decoration:none; margin-left:20px; font-size:.95em; }
+  nav a:hover { color:#fff; }
+
+  /* Badges magasins (style officiel : noir, contour gris, logo à gauche) */
+  .badges { display:flex; flex-wrap:wrap; gap:12px; }
+  .badge { display:inline-flex; align-items:center; gap:10px; height:54px; padding:0 18px 0 14px; border-radius:12px;
+    background:#000; border:1.5px solid #a6a6a6; color:#fff; text-decoration:none; transition:transform .25s, box-shadow .25s; }
+  .badge:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(123,92,255,.45); }
+  .badge svg { width:28px; height:28px; flex:none; }
+  .badge span { display:flex; flex-direction:column; line-height:1.1; }
+  .badge small { font-size:.7em; letter-spacing:.02em; }
+  .badge b { font-size:1.35em; font-weight:600; letter-spacing:-.01em; }
+
+  /* Haut de page : texte + téléphones qui flottent en 3D */
+  .hero { min-height:100vh; display:flex; align-items:center; padding:90px 0 40px; position:relative;
+    background:radial-gradient(ellipse 60% 50% at 75% 40%, rgba(123,92,255,.35), transparent 70%),
+               radial-gradient(ellipse 40% 40% at 20% 80%, rgba(255,79,163,.18), transparent 70%); }
+  .hero .wrap { display:grid; grid-template-columns:1.05fr 1fr; gap:30px; align-items:center; width:100%; }
+  .hero h1 { font-size:clamp(2.4em,6vw,4.6em); line-height:1.02; margin:0 0 20px; letter-spacing:-.03em; }
+  .hero p { color:var(--muted); font-size:1.15em; max-width:520px; margin:0 0 30px; }
+  .stage { position:relative; height:620px; perspective:1400px; }
+  .phone { position:absolute; width:250px; border-radius:30px; box-shadow:0 30px 80px rgba(0,0,0,.6), 0 0 60px rgba(123,92,255,.35);
+    will-change:transform; transition:transform .2s ease-out; }
+  .phone.p1 { left:50%; top:30px; margin-left:-125px; z-index:3; }
+  .phone.p2 { left:2%; top:90px; z-index:2; }
+  .phone.p3 { right:2%; top:90px; z-index:2; }
+  .float { animation:flotte 7s ease-in-out infinite; }
+  .float.d2 { animation-delay:-2.3s; } .float.d3 { animation-delay:-4.6s; }
+  @keyframes flotte { 50% { translate:0 -18px; } }
+  .hero .anim { animation:monte 1s cubic-bezier(.2,.7,.2,1) both; }
+  .hero .anim:nth-child(2) { animation-delay:.12s; } .hero .anim:nth-child(3) { animation-delay:.24s; }
+  @keyframes monte { from { opacity:0; transform:translateY(40px); } }
+
+  /* Histoire au défilement : grands mots + écran qui tourne et change */
+  .story { height:400vh; position:relative; }
+  .story .sticky { position:sticky; top:0; height:100vh; display:flex; align-items:center; overflow:hidden; }
+  .story .wrap { display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center; width:100%; }
+  .words { position:relative; height:260px; }
+  .word { position:absolute; inset:0; opacity:0; transform:translateY(40px); transition:opacity .5s, transform .5s; }
+  .word.on { opacity:1; transform:none; }
+  .word h2 { font-size:clamp(2.2em,5.5vw,4.2em); line-height:1.02; margin:0 0 14px; letter-spacing:-.03em; }
+  .word p { color:var(--muted); font-size:1.1em; margin:0; max-width:440px; }
+  .screen { position:relative; height:640px; perspective:1400px; }
+  .screen img { position:absolute; left:50%; top:50%; width:280px; margin:-305px 0 0 -140px; border-radius:32px;
+    box-shadow:0 30px 90px rgba(0,0,0,.6), 0 0 80px rgba(255,79,163,.3); opacity:0; will-change:transform,opacity; }
+  .dots { display:flex; gap:8px; margin-top:26px; }
+  .dots i { width:28px; height:4px; border-radius:2px; background:rgba(255,255,255,.18); transition:background .4s; }
+  .dots i.on { background:linear-gradient(90deg,var(--a1),var(--a2)); }
+
+  /* Galerie qui défile toute seule */
+  .shots { overflow:hidden; padding:30px 0 60px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent); }
+  .track { display:flex; gap:22px; width:max-content; animation:defile 50s linear infinite; }
+  .shots:hover .track { animation-play-state:paused; }
+  .track img { width:210px; flex:none; border-radius:24px; box-shadow:0 18px 50px rgba(123,92,255,.3); transition:transform .4s; }
+  .track img:hover { transform:scale(1.07) translateY(-8px); }
+  @keyframes defile { to { transform:translateX(calc(-50% - 11px)); } }
+
+  section { padding:70px 0; }
+  .title { font-size:clamp(1.8em,4vw,2.8em); text-align:center; margin:0 0 36px; letter-spacing:-.02em; line-height:1.1; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .card { background:linear-gradient(160deg,#17173a,#0f0f22); border:1px solid rgba(255,255,255,.06); border-radius:20px; padding:24px; transition:transform .3s, border-color .3s; }
+  .card:hover { transform:translateY(-4px); border-color:rgba(123,92,255,.5); }
+  .card .ico { font-size:1.8em; }
+  .card h3 { margin:8px 0 6px; font-size:1.1em; }
+  .card p { margin:0; color:var(--muted); }
+  .reveal { opacity:0; transform:translateY(40px) scale(.97); transition:opacity .8s, transform .8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.vu { opacity:1; transform:none; }
+
+  /* Écrans : Apple TV en grand qui se redresse au défilement */
+  .tv { perspective:1600px; }
+  .tv img { width:100%; border-radius:20px; display:block; transform-origin:center bottom; will-change:transform;
+    box-shadow:0 40px 120px rgba(123,92,255,.35); }
+
+  /* Disponible : icône qui brille, comme la vidéo d'Apple */
+  .dispo { text-align:center; padding:110px 0; }
+  .dispo h2 { font-size:clamp(2.2em,5vw,3.6em); margin:0; letter-spacing:-.02em; }
+  .dispo .name { color:var(--muted); margin:4px 0 34px; font-size:1.1em; }
+  .icon { width:170px; height:170px; border-radius:38px; margin:0 auto 38px; display:block;
+    box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 0 70px rgba(123,92,255,.6), 0 0 140px rgba(63,169,255,.25);
+    animation:brille 4s ease-in-out infinite; }
+  @keyframes brille { 50% { box-shadow:0 0 0 1px rgba(255,255,255,.12), 0 0 100px rgba(255,79,163,.6), 0 0 180px rgba(123,92,255,.4); transform:translateY(-6px); } }
+  .dispo .badges { justify-content:center; }
+
+  code { background:#24243d; padding:2px 8px; border-radius:6px; word-break:break-all; }
+  .faq p { margin:0 0 14px; }
+  footer { color:var(--muted); font-size:.9em; text-align:center; padding:32px 0 48px; border-top:1px solid #1d1d36; }
+
+  @media (max-width:860px) {
+    .hero .wrap, .story .wrap { grid-template-columns:1fr; }
+    .hero { padding-top:100px; text-align:center; } .hero p { margin-left:auto; margin-right:auto; } .hero .badges { justify-content:center; }
+    .stage { height:430px; } .phone { width:170px; border-radius:22px; } .phone.p1 { margin-left:-85px; top:10px; } .phone.p2, .phone.p3 { top:60px; }
+    .story .sticky { align-items:flex-start; padding-top:76px; }
+    .words { height:170px; text-align:center; } .word p { margin:0 auto; } .dots { justify-content:center; }
+    .screen { height:470px; } .screen img { width:210px; margin:-228px 0 0 -105px; border-radius:24px; }
+    nav a:first-child { display:none; } nav a { margin-left:14px; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .float, .track, .icon, .hero .anim { animation:none; } .reveal { opacity:1; transform:none; }
+  }
 </style>
 </head>
 <body>
-<h1>Ben TV – Assistance</h1>
-<p>Ben TV est un lecteur pour vos propres playlists IPTV (M3U ou compte Xtream). L'appli ne fournit aucune chaîne ni aucun contenu.</p>
 
-<h2>Bien démarrer</h2>
-<ol>
-  <li>Ouvrez Ben TV : l'écran Playlists s'affiche.</li>
-  <li>Entrez l'adresse de votre playlist M3U, ou les identifiants Xtream donnés par votre fournisseur, puis touchez « Ajouter ».</li>
-  <li>Retrouvez vos chaînes dans « TV en direct », vos films dans « Films » et vos séries dans « Séries ».</li>
-</ol>
-<p>Pour essayer sans abonnement, une liste de démonstration composée de vidéos libres est disponible :<br>
-<code>https://blenevez-apptv.github.io/ben-tv/demo.m3u</code></p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="apple" viewBox="0 0 24 24"><path fill="currentColor" d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></symbol>
+  <symbol id="android" viewBox="0 0 24 24"><g fill="#3ddc84"><path d="M5 10.5a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0zM17 10.5a1 1 0 0 1 2 0v5a1 1 0 0 1-2 0zM7.6 9h8.8v8a1 1 0 0 1-1 1h-.9v2.5a1 1 0 0 1-2 0V18h-1v2.5a1 1 0 0 1-2 0V18h-.9a1 1 0 0 1-1-1zM7.6 8.3a4.4 4.4 0 0 1 8.8 0z"/></g><circle cx="10" cy="6.2" r=".55" fill="#000"/><circle cx="14" cy="6.2" r=".55" fill="#000"/><path d="M8.6 2.6l1 1.6M15.4 2.6l-1 1.6" stroke="#3ddc84" stroke-width=".7" stroke-linecap="round"/></symbol>
+</svg>
 
-<h2>Questions fréquentes</h2>
-<p><strong>« Erreur réseau » ou chaîne indisponible :</strong> vérifiez l'adresse du serveur (avec <code>http://</code> et le port) et votre connexion. Dans Paramètres, « Format du flux » et « Mémoire tampon » peuvent améliorer la lecture.</p>
-<p><strong>Image dans l'image :</strong> dans Paramètres &gt; Lecteur, choisissez « Apple » pour que la vidéo continue en petite fenêtre quand vous quittez l'appli.</p>
-<p><strong>Mes données :</strong> tout reste sur votre appareil. Voir la <a href="confidentialite.html">politique de confidentialité</a>.</p>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="img/logo.png" alt="">Ben TV</a>
+    <nav><a href="#fonctions">Fonctions</a><a href="https://apps.apple.com/us/app/ben-tv/id6834144206">Apple</a><a href="https://go.aftvnews.com/1960385">Android</a><a href="#assistance">Assistance</a></nav>
+  </div>
+</header>
 
-<h2>Contact</h2>
-<p><a href="mailto:bentv.assistance@gmail.com">bentv.assistance@gmail.com</a></p>
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <h1 class="anim">Toute votre TV.<br><span class="grad">En un seul endroit.</span></h1>
+      <p class="anim">Ben TV lit vos playlists M3U et vos comptes Xtream : TV en direct, films, séries, replay et guide des programmes. Gratuit, sans publicité, sans compte.</p>
+      <div class="badges anim">
+        <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206" aria-label="Télécharger dans l'App Store">
+          <svg><use href="#apple"/></svg><span><small>Télécharger dans l'</small><b>App Store</b></span></a>
+        <a class="badge" href="https://go.aftvnews.com/1960385" aria-label="Disponible sur Android">
+          <svg><use href="#android"/></svg><span><small>Disponible aussi sur</small><b>Android</b></span></a>
+      </div>
+    </div>
+    <div class="stage" id="stage">
+      <img class="phone p2 float d2" data-depth="-14" data-rot="18" src="img/02-guide-tv.jpg" alt="Guide TV">
+      <img class="phone p3 float d3" data-depth="14" data-rot="-18" src="img/03-fiche-film.jpg" alt="Fiche film">
+      <img class="phone p1 float" data-depth="0" data-rot="0" src="img/01-accueil.jpg" alt="Accueil de Ben TV">
+    </div>
+  </div>
+</div>
+
+<div class="story" id="story">
+  <div class="sticky">
+    <div class="wrap">
+      <div>
+        <div class="words">
+          <div class="word on"><h2>Ne ratez plus<br><span class="grad">rien en direct.</span></h2><p>Le guide des programmes en grille, la ligne « maintenant », et le replay quand votre fournisseur le propose.</p></div>
+          <div class="word"><h2>Films et séries<br><span class="grad">à volonté.</span></h2><p>Fiches complètes : bande-annonce, acteurs, sagas et idées « dans le même genre ».</p></div>
+          <div class="word"><h2>Reprenez<br><span class="grad">là où vous en étiez.</span></h2><p>Barre de progression, épisode suivant, « ✓ Vu » : Ben TV se souvient pour vous.</p></div>
+          <div class="word"><h2>Pas d'idée<br><span class="grad">ce soir ?</span></h2><p>« Suggère-moi » choisit pour vous selon votre envie et avec qui vous regardez.</p></div>
+        </div>
+        <div class="dots"><i class="on"></i><i></i><i></i><i></i></div>
+      </div>
+      <div class="screen">
+        <img src="img/02-guide-tv.jpg" alt="Guide TV">
+        <img src="img/03-fiche-film.jpg" alt="Fiche film">
+        <img src="img/04-reprendre.jpg" alt="Reprendre la lecture">
+        <img src="img/05-suggere-moi.jpg" alt="Suggère-moi">
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="fonctions">
+  <div class="wrap">
+    <h2 class="title reveal">Tout ce qu'il faut,<br><span class="grad">rien de trop.</span></h2>
+    <div class="grid">
+      <div class="card reveal"><div class="ico">📺</div><h3>TV en direct</h3><p>Vos chaînes rangées par catégories, avec bascule automatique sur une autre version si le flux coupe.</p></div>
+      <div class="card reveal"><div class="ico">🗓️</div><h3>Guide et replay</h3><p>Guide des programmes en grille et replay quand votre fournisseur le propose.</p></div>
+      <div class="card reveal"><div class="ico">🎬</div><h3>Films et séries</h3><p>Une affiche par titre, version VF, VOSTFR ou 4K au choix.</p></div>
+      <div class="card reveal"><div class="ico">⬇️</div><h3>Hors ligne</h3><p>Téléchargez films et épisodes pour les regarder sans connexion (iPhone, iPad, Android).</p></div>
+      <div class="card reveal"><div class="ico">👨‍👩‍👧</div><h3>Profils et code parental</h3><p>Un profil par personne, catégories verrouillées par code.</p></div>
+      <div class="card reveal"><div class="ico">🎨</div><h3>10 thèmes</h3><p>Accueil à la carte et couleurs au choix.</p></div>
+      <div class="card reveal"><div class="ico">🖼️</div><h3>Image dans l'image</h3><p>Continuez à regarder en petite fenêtre sur iPhone et iPad.</p></div>
+      <div class="card reveal"><div class="ico">🔒</div><h3>Aucune donnée collectée</h3><p>Pas de compte, pas de publicité, pas de pistage. Tout reste sur votre appareil.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="shots">
+  <div class="track">
+    <img src="img/01-accueil.jpg" alt="Accueil"><img src="img/02-guide-tv.jpg" alt="Guide TV"><img src="img/03-fiche-film.jpg" alt="Fiche film"><img src="img/04-reprendre.jpg" alt="Reprendre"><img src="img/05-suggere-moi.jpg" alt="Suggère-moi"><img src="img/06-themes.jpg" alt="Thèmes"><img src="img/07-telechargements.jpg" alt="Téléchargements">
+    <img src="img/01-accueil.jpg" alt="" aria-hidden="true"><img src="img/02-guide-tv.jpg" alt="" aria-hidden="true"><img src="img/03-fiche-film.jpg" alt="" aria-hidden="true"><img src="img/04-reprendre.jpg" alt="" aria-hidden="true"><img src="img/05-suggere-moi.jpg" alt="" aria-hidden="true"><img src="img/06-themes.jpg" alt="" aria-hidden="true"><img src="img/07-telechargements.jpg" alt="" aria-hidden="true">
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2 class="title reveal">Sur tous vos écrans.</h2>
+    <div class="tv"><img id="tvimg" src="img/tv-accueil.jpg" alt="Ben TV sur Apple TV"></div>
+    <p class="reveal" style="text-align:center;color:var(--muted);max-width:640px;margin:28px auto 0">iPhone, iPad, Apple TV pensée pour la télécommande, téléphones Android et Fire TV. Même appli, mêmes habitudes.</p>
+  </div>
+</section>
+
+<section id="android">
+  <div class="wrap">
+    <h2 class="title reveal">Ben TV sur <span class="grad">Android et Fire TV</span></h2>
+    <div class="grid">
+      <div class="card reveal"><div class="ico">📱</div><h3>Téléphone ou box Android</h3>
+        <p>Téléchargez l'appli puis ouvrez le fichier pour l'installer :</p>
+        <p style="margin-top:16px"><a class="badge" href="https://go.aftvnews.com/1960385">
+          <svg><use href="#android"/></svg><span><small>Télécharger pour</small><b>Android</b></span></a></p></div>
+      <div class="card reveal"><div class="ico">🔥</div><h3>Fire TV Stick</h3>
+        <p>Installez l'appli <strong>Downloader</strong> depuis l'Amazon Appstore, puis tapez le code <code>1960385</code>.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="dispo">
+  <img class="icon reveal" src="img/icon.png" alt="Icône Ben TV">
+  <h2 class="reveal">Disponible</h2>
+  <p class="name reveal">Ben TV</p>
+  <div class="badges reveal">
+    <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206"><svg><use href="#apple"/></svg><span><small>Télécharger dans l'</small><b>App Store</b></span></a>
+    <a class="badge" href="https://go.aftvnews.com/1960385"><svg><use href="#android"/></svg><span><small>Disponible aussi sur</small><b>Android</b></span></a>
+  </div>
+</div>
+
+<section id="assistance" class="faq">
+  <div class="wrap">
+    <h2 class="title reveal">Assistance</h2>
+    <div class="card reveal">
+      <h3>Bien démarrer</h3>
+      <p>Ouvrez Ben TV, entrez l'adresse de votre playlist M3U ou les identifiants Xtream donnés par votre fournisseur, puis touchez « Ajouter ». Pour essayer sans abonnement, une liste de démonstration de vidéos libres : <code>https://blenevez-apptv.github.io/ben-tv/demo.m3u</code></p>
+      <p><strong>« Erreur réseau » ou chaîne indisponible :</strong> vérifiez l'adresse du serveur (avec <code>http://</code> et le port) et votre connexion. Dans Paramètres, « Format du flux » et « Mémoire tampon » peuvent améliorer la lecture.</p>
+      <p><strong>Image dans l'image :</strong> dans Paramètres &gt; Lecteur, choisissez « Apple ».</p>
+      <p><strong>Une question, un souci ?</strong> Utilisez la tuile « Support » dans les Paramètres de l'appli, ou écrivez à <a href="mailto:bentv.assistance@gmail.com">bentv.assistance@gmail.com</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Ben TV ne fournit aucune chaîne, aucun film ni aucun abonnement : il lit uniquement les playlists dont vous avez les droits d'utilisation. Ben TV n'est affilié à aucun fournisseur de contenu.</p>
+    <p>Fiches films et séries : ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</p>
+    <p>Apple, le logo Apple et App Store sont des marques d'Apple Inc. Android est une marque de Google LLC.</p>
+    <p><a href="confidentialite.html">Confidentialité</a> · <a href="mailto:bentv.assistance@gmail.com">Contact</a> · © 2026 Benjamin Le Nevez</p>
+  </div>
+</footer>
+
+<script>
+  const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Apparition en glissant.
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vu'); io.unobserve(e.target); } }), { threshold:.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Haut de page : les téléphones s'écartent et tournent quand on descend, suivent la souris.
+  const phones = [...document.querySelectorAll('.phone')];
+  let mx = 0, my = 0;
+  addEventListener('mousemove', e => { mx = e.clientX / innerWidth - .5; my = e.clientY / innerHeight - .5; });
+
+  // Histoire : un écran par étape, qui arrive en tournant.
+  const story = document.getElementById('story');
+  const shots = [...story.querySelectorAll('.screen img')], words = [...story.querySelectorAll('.word')], dots = [...story.querySelectorAll('.dots i')];
+  const tv = document.getElementById('tvimg');
+
+  function frame() {
+    const y = scrollY, vh = innerHeight;
+    // Téléphones du haut.
+    const h = Math.min(y / vh, 1);
+    phones.forEach(p => {
+      const d = +p.dataset.depth, r = +p.dataset.rot;
+      p.style.transform = `translate3d(${d * h * 6 + mx * (d || 6) * 2}px, ${-h * 120 * (1 + Math.abs(d) / 14)}px, ${-Math.abs(d) * 8}px)
+        rotateY(${r * (1 - h) + mx * 12}deg) rotateX(${-my * 8 + h * 10}deg) rotateZ(${d * h * .8}deg)`;
+    });
+    // Histoire.
+    const r = story.getBoundingClientRect();
+    const t = Math.min(Math.max(-r.top / (r.height - vh), 0), .9999) * shots.length;
+    const i = Math.floor(t), f = t - i;
+    shots.forEach((s, k) => {
+      const k0 = k - t; // 0 = au centre ; <0 parti ; >0 à venir
+      const op = k === i ? 1 : (k === i + 1 ? Math.max(0, f * 2 - 1) : 0);
+      s.style.opacity = op;
+      s.style.transform = `translate3d(${k0 * 160}px, ${Math.abs(k0) * 40}px, ${-Math.abs(k0) * 300}px) rotateY(${-k0 * 35}deg) rotateZ(${k0 * 4}deg)`;
+    });
+    words.forEach((w, k) => w.classList.toggle('on', k === i));
+    dots.forEach((d, k) => d.classList.toggle('on', k <= i));
+    // Apple TV qui se redresse.
+    const tr = tv.getBoundingClientRect();
+    const p = Math.min(Math.max(1 - (tr.top - vh * .15) / (vh * .8), 0), 1);
+    tv.style.transform = `rotateX(${(1 - p) * 35}deg) scale(${.85 + p * .15})`;
+    requestAnimationFrame(frame);
+  }
+  if (!calme) requestAnimationFrame(frame);
+  else shots.forEach((s, k) => s.style.opacity = k === 0 ? 1 : 0);
+</script>
 </body>
 </html>
