@@ -210,6 +210,7 @@
           <button class="tab" data-k="reprendre" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></svg>Reprendre</button>
           <button class="tab" data-k="suggere" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Suggère-moi</button>
           <button class="tab" data-k="themes" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1.1.2-2.2 1.4-2.2H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>Thèmes</button>
+          <button class="tab" data-k="langues" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Langues</button>
           <button class="tab" data-k="telech" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>Hors ligne</button>
       </div>
     <div class="stage" id="stage">
@@ -222,6 +223,7 @@
         <img class="mini" data-k="reprendre" src="img/04-reprendre.jpg" alt="Reprendre la lecture">
         <img class="mini" data-k="suggere" src="img/05-suggere-moi.jpg" alt="Suggère-moi">
         <img class="mini" data-k="themes" src="img/06-themes.jpg" alt="Thèmes">
+        <img class="mini" data-k="langues" src="img/08-langues.jpg" alt="Langues">
         <img class="mini" data-k="telech" src="img/07-telechargements.jpg" alt="Téléchargements">
         <div class="pivot"><div class="card3d" id="card3d"><img class="face" src="img/01-accueil.jpg" alt="Écran de Ben TV"><img class="face dos" src="img/02-guide-tv.jpg" alt=""></div></div>
       </div>
@@ -239,7 +241,8 @@
       <div class="card reveal"><div class="ico">🎬</div><h3>Films et séries</h3><p>Une affiche par titre, version VF, VOSTFR ou 4K au choix.</p></div>
       <div class="card reveal"><div class="ico">⬇️</div><h3>Hors ligne</h3><p>Téléchargez films et épisodes pour les regarder sans connexion (iPhone, iPad, Android).</p></div>
       <div class="card reveal"><div class="ico">👨‍👩‍👧</div><h3>Profils et code parental</h3><p>Un profil par personne, catégories verrouillées par code.</p></div>
-      <div class="card reveal"><div class="ico">🎨</div><h3>10 thèmes</h3><p>Accueil à la carte et couleurs au choix.</p></div>
+      <div class="card reveal"><div class="ico">🎨</div><h3>20 thèmes</h3><p>Dont 2 thèmes clairs et « Mon thème » : choisissez votre propre couleur.</p></div>
+      <div class="card reveal"><div class="ico">🌍</div><h3>10 langues</h3><p>Français, anglais, arabe, espagnol, allemand, italien, portugais, turc, néerlandais, polonais.</p></div>
       <div class="card reveal"><div class="ico">🖼️</div><h3>Image dans l'image</h3><p>Continuez à regarder en petite fenêtre sur iPhone et iPad.</p></div>
       <div class="card reveal"><div class="ico">🔒</div><h3>Aucune donnée collectée</h3><p>Pas de compte, pas de publicité, pas de pistage. Tout reste sur votre appareil.</p></div>
     </div>
@@ -326,7 +329,8 @@
     film: ['Films et séries', 'à volonté.', "Fiches complètes : bande-annonce, acteurs, sagas et idées « dans le même genre »."],
     reprendre: ['Reprenez là', 'où vous en étiez.', "Barre de progression, épisode suivant, « ✓ Vu » : Ben TV se souvient pour vous."],
     suggere: ["Pas d'idée", 'ce soir ?', "« Suggère-moi » choisit pour vous selon votre envie et avec qui vous regardez."],
-    themes: ['Votre TV,', 'vos couleurs.', "10 thèmes de couleurs et un accueil à la carte : vous choisissez ce qui s'affiche."],
+    themes: ['Votre TV,', 'vos couleurs.', "20 thèmes, dont 2 clairs, et « Mon thème » pour choisir votre propre couleur. Accueil à la carte."],
+    langues: ['Votre TV parle', 'votre langue.', "10 langues, arabe compris : Ben TV suit la langue de votre appareil, ou choisissez-la dans Paramètres."],
     telech: ['Emportez vos films', 'partout.', "Téléchargez films et épisodes pour les regarder sans connexion, en voyage ou dans le train."],
   };
   const tabs = [...document.querySelectorAll('.tab')], stage = document.getElementById('stage'), monde = document.getElementById('monde');
