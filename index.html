@@ -23,10 +23,12 @@
   header .wrap { display:flex; align-items:center; justify-content:space-between; height:92px; }
   .brand { display:flex; align-items:center; gap:12px; text-decoration:none; }
   .brand img { width:82px; height:82px; filter:drop-shadow(0 0 12px rgba(232,22,237,.55)); }
-  nav a { color:var(--muted); text-decoration:none; margin-left:22px; font-size:1em; animation:allume 5s ease-in-out infinite; }
+  nav a { color:var(--muted); text-decoration:none; margin-inline-start:22px; font-size:1em; animation:allume 5s ease-in-out infinite; }
   nav a:nth-child(2) { animation-delay:.6s; } nav a:nth-child(3) { animation-delay:1.2s; } nav a:nth-child(4) { animation-delay:1.8s; } nav a:nth-child(5) { animation-delay:2.4s; }
   @keyframes allume { 0%, 26%, 100% { color:var(--muted); text-shadow:none; }
     8% { color:#fff; text-shadow:0 0 8px #ff4fa3, 0 0 18px #7b5cff, 0 0 30px #3fa9ff; } 16% { color:#e9e4ff; text-shadow:0 0 6px #7b5cff; } }
+  #lang { margin-inline-start:18px; padding:6px 8px; border-radius:10px; border:1px solid rgba(255,255,255,.18); background:var(--panel); color:var(--text); font:inherit; font-size:.9em; cursor:pointer; max-width:9em; }
+  header nav { margin-inline-start:auto; }
   nav a:hover { color:#fff; text-shadow:0 0 8px #ff4fa3, 0 0 18px #7b5cff; animation:none; }
 
   /* Badges magasins (style officiel : noir, contour gris, logo à gauche) */
@@ -151,7 +153,7 @@
     .hero .wrap { grid-template-columns:1fr; }
     .hero { padding-top:100px; text-align:center; } .hero p { margin-left:auto; margin-right:auto; } .hero .badges { justify-content:center; }
     .stage { height:520px; } .pivot { width:180px; height:391px; left:-90px; top:-195px; } .mini { width:88px; margin:-96px 0 0 -44px; border-radius:12px; }
-    nav a:first-child { display:none; } nav a { margin-left:10px; font-size:.85em; } .brand { white-space:nowrap; } .brand img { width:56px; height:56px; } header .wrap { height:70px; }
+    nav a:first-child { display:none; } nav a { margin-inline-start:10px; font-size:.85em; } .brand { white-space:nowrap; } .brand img { width:56px; height:56px; } header .wrap { height:70px; }
     /* Téléphone : texte, onglets puis écrans juste dessous (on voit le texte changer en touchant un onglet), boutons à la fin. */
     .hero { padding:128px 0 34px; min-height:0; }
     .hero .wrap { display:flex; flex-direction:column; gap:0; }
@@ -166,7 +168,7 @@
     .mini { width:70px; margin:-76px 0 0 -35px; border-radius:10px; }
     .showcase { position:relative; z-index:1; } .hero .badges { position:relative; z-index:5; }
   }
-  @media (max-width:400px) { nav a { margin-left:8px; font-size:.78em; } .brand img { width:48px; height:48px; } }
+  @media (max-width:400px) { nav a { margin-inline-start:8px; font-size:.78em; } .brand img { width:48px; height:48px; } }
   @media (prefers-reduced-motion:reduce) {
     .mini, .orb, .icon, .hero .anim, .fond-cols .col, #fonctions .card, .hero .badge::before, nav a { animation:none; } .card3d { transition:none; } .reveal { opacity:1; transform:none; }
   }
@@ -183,7 +185,8 @@
 <header>
   <div class="wrap">
     <a class="brand" href="#" aria-label="Ben TV"><img src="img/logo.png" alt="Ben TV"></a>
-    <nav><a href="#fonctions">Fonctions</a><a href="https://apps.apple.com/us/app/ben-tv/id6834144206">Apple</a><a href="https://go.aftvnews.com/1960385">Android</a><a href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1">PC</a><a href="#assistance">Assistance</a></nav>
+    <nav><a href="#fonctions" data-t="nav1">Fonctions</a><a href="https://apps.apple.com/us/app/ben-tv/id6834144206">Apple</a><a href="https://go.aftvnews.com/1960385">Android</a><a href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1">PC</a><a href="#assistance" data-t="nav2">Assistance</a></nav>
+    <select id="lang" aria-label="Langue / Language"></select>
   </div>
 </header>
 
@@ -194,24 +197,24 @@
       <p class="anim">Ben TV lit vos playlists M3U et vos comptes Xtream : TV en direct, films, séries, replay et guide des programmes. Gratuit, sans publicité, sans compte.</p>
       <p class="hint anim" id="hint">Bougez la souris, passez sur un onglet ou un écran pour le découvrir.</p>
       <div class="badges anim">
-        <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206" aria-label="Télécharger dans l'App Store">
-          <svg><use href="#apple"/></svg><span><small>Télécharger dans l'</small><b>App Store</b></span></a>
-        <a class="badge" href="https://go.aftvnews.com/1960385" aria-label="Disponible sur Android">
-          <svg><use href="#android"/></svg><span><small>Disponible aussi sur</small><b>Android</b></span></a>
-        <a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1" aria-label="Télécharger pour PC Windows">
-          <svg><use href="#windows"/></svg><span><small>Télécharger pour</small><b>PC Windows</b></span></a>
+        <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206" data-ta="aria-label:aApp" aria-label="Télécharger dans l'App Store">
+          <svg><use href="#apple"/></svg><span><small data-t="bApp">Télécharger dans l'</small><b>App Store</b></span></a>
+        <a class="badge" href="https://go.aftvnews.com/1960385" data-ta="aria-label:aAnd" aria-label="Disponible sur Android">
+          <svg><use href="#android"/></svg><span><small data-t="bAnd">Disponible aussi sur</small><b>Android</b></span></a>
+        <a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1" data-ta="aria-label:aPc" aria-label="Télécharger pour PC Windows">
+          <svg><use href="#windows"/></svg><span><small data-t="bFor">Télécharger pour</small><b>PC Windows</b></span></a>
       </div>
     </div>
     <div class="showcase" id="showcase">
       <div class="tabs">
-          <button class="tab" data-k="accueil" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
-          <button class="tab" data-k="guide" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>Guide TV</button>
-          <button class="tab" data-k="film" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 12h18M3 7.5h4M3 16.5h4M17 7.5h4M17 16.5h4"/></svg>Films &amp; séries</button>
-          <button class="tab" data-k="reprendre" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></svg>Reprendre</button>
-          <button class="tab" data-k="suggere" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Suggère-moi</button>
-          <button class="tab" data-k="themes" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1.1.2-2.2 1.4-2.2H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>Thèmes</button>
-          <button class="tab" data-k="langues" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Langues</button>
-          <button class="tab" data-k="telech" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg>Hors ligne</button>
+          <button class="tab" data-k="accueil" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span data-t="tab_accueil">Accueil</span></button>
+          <button class="tab" data-k="guide" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg><span data-t="tab_guide">Guide TV</span></button>
+          <button class="tab" data-k="film" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 12h18M3 7.5h4M3 16.5h4M17 7.5h4M17 16.5h4"/></svg><span data-t="tab_film">Films &amp; séries</span></button>
+          <button class="tab" data-k="reprendre" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/></svg><span data-t="tab_reprendre">Reprendre</span></button>
+          <button class="tab" data-k="suggere" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg><span data-t="tab_suggere">Suggère-moi</span></button>
+          <button class="tab" data-k="themes" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1.2-1.8-.5-1.1.2-2.2 1.4-2.2H17a4 4 0 0 0 4-4c0-5.5-4-10-9-10z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg><span data-t="tab_themes">Thèmes</span></button>
+          <button class="tab" data-k="langues" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span data-t="tab_langues">Langues</span></button>
+          <button class="tab" data-k="telech" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg><span data-t="tab_telech">Hors ligne</span></button>
       </div>
     <div class="stage" id="stage">
       <div class="orb" style="width:260px;height:260px;margin:-130px;background:#7b5cff"></div>
@@ -234,36 +237,36 @@
 
 <section id="fonctions">
   <div class="wrap">
-    <h2 class="title reveal">Tout ce qu'il faut,<br><span class="grad">rien de trop.</span></h2>
+    <h2 class="title reveal" data-t="fTitle">Tout ce qu'il faut,<br><span class="grad">rien de trop.</span></h2>
     <div class="grid">
-      <div class="card reveal"><div class="ico">📺</div><h3>TV en direct</h3><p>Vos chaînes rangées par catégories, avec bascule automatique sur une autre version si le flux coupe.</p></div>
-      <div class="card reveal"><div class="ico">🗓️</div><h3>Guide et replay</h3><p>Guide des programmes en grille et replay quand votre fournisseur le propose.</p></div>
-      <div class="card reveal"><div class="ico">🎬</div><h3>Films et séries</h3><p>Une affiche par titre, version VF, VOSTFR ou 4K au choix.</p></div>
-      <div class="card reveal"><div class="ico">⬇️</div><h3>Hors ligne</h3><p>Téléchargez films et épisodes pour les regarder sans connexion (iPhone, iPad, Android).</p></div>
-      <div class="card reveal"><div class="ico">👨‍👩‍👧</div><h3>Profils et code parental</h3><p>Un profil par personne, catégories verrouillées par code.</p></div>
-      <div class="card reveal"><div class="ico">🎨</div><h3>20 thèmes</h3><p>Dont 2 thèmes clairs et « Mon thème » : choisissez votre propre couleur.</p></div>
-      <div class="card reveal"><div class="ico">🌍</div><h3>10 langues</h3><p>Français, anglais, arabe, espagnol, allemand, italien, portugais, turc, néerlandais, polonais.</p></div>
-      <div class="card reveal"><div class="ico">🖼️</div><h3>Image dans l'image</h3><p>Continuez à regarder en petite fenêtre sur iPhone et iPad.</p></div>
-      <div class="card reveal"><div class="ico">🔒</div><h3>Aucune donnée collectée</h3><p>Pas de compte, pas de publicité, pas de pistage. Tout reste sur votre appareil.</p></div>
+      <div class="card reveal"><div class="ico">📺</div><h3 data-t="c1h">TV en direct</h3><p data-t="c1p">Vos chaînes rangées par catégories, avec bascule automatique sur une autre version si le flux coupe.</p></div>
+      <div class="card reveal"><div class="ico">🗓️</div><h3 data-t="c2h">Guide et replay</h3><p data-t="c2p">Guide des programmes en grille et replay quand votre fournisseur le propose.</p></div>
+      <div class="card reveal"><div class="ico">🎬</div><h3 data-t="c3h">Films et séries</h3><p data-t="c3p">Une affiche par titre, version VF, VOSTFR ou 4K au choix.</p></div>
+      <div class="card reveal"><div class="ico">⬇️</div><h3 data-t="c4h">Hors ligne</h3><p data-t="c4p">Téléchargez films et épisodes pour les regarder sans connexion (iPhone, iPad, Android).</p></div>
+      <div class="card reveal"><div class="ico">👨‍👩‍👧</div><h3 data-t="c5h">Profils et code parental</h3><p data-t="c5p">Un profil par personne, catégories verrouillées par code.</p></div>
+      <div class="card reveal"><div class="ico">🎨</div><h3 data-t="c6h">20 thèmes</h3><p data-t="c6p">Dont 2 thèmes clairs et « Mon thème » : choisissez votre propre couleur.</p></div>
+      <div class="card reveal"><div class="ico">🌍</div><h3 data-t="c7h">10 langues</h3><p data-t="c7p">Français, anglais, arabe, espagnol, allemand, italien, portugais, turc, néerlandais, polonais.</p></div>
+      <div class="card reveal"><div class="ico">🖼️</div><h3 data-t="c8h">Image dans l'image</h3><p data-t="c8p">Continuez à regarder en petite fenêtre sur iPhone et iPad.</p></div>
+      <div class="card reveal"><div class="ico">🔒</div><h3 data-t="c9h">Aucune donnée collectée</h3><p data-t="c9p">Pas de compte, pas de publicité, pas de pistage. Tout reste sur votre appareil.</p></div>
     </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2 class="title reveal">Sur tous vos écrans.</h2>
-    <div class="tv"><img id="tvimg" src="img/appareils.jpg" alt="Ben TV sur télé (Apple TV, Fire TV Stick), PC Windows, iPhone, Android et iPad"></div>
-    <p class="reveal" style="text-align:center;color:var(--muted);max-width:640px;margin:28px auto 0">iPhone, iPad, Apple TV pensée pour la télécommande, téléphones Android, Fire TV et PC Windows. Même appli, mêmes habitudes.</p>
+    <h2 class="title reveal" data-t="eTitle">Sur tous vos écrans.</h2>
+    <div class="tv"><img id="tvimg" src="img/appareils.jpg" data-ta="alt:eAlt" alt="Ben TV sur télé (Apple TV, Fire TV Stick), PC Windows, iPhone, Android et iPad"></div>
+    <p class="reveal" data-t="eP" style="text-align:center;color:var(--muted);max-width:640px;margin:28px auto 0">iPhone, iPad, Apple TV pensée pour la télécommande, téléphones Android, Fire TV et PC Windows. Même appli, mêmes habitudes.</p>
   </div>
 </section>
 
 <section id="telecharger">
   <div class="wrap">
-    <h2 class="title reveal">Ben TV sur <span class="grad">tous vos appareils</span></h2>
+    <h2 class="title reveal" data-t="dTitle">Ben TV sur <span class="grad">tous vos appareils</span></h2>
     <div class="apps">
-      <div class="app reveal"><div class="big"><svg><use href="#apple"/></svg></div><h3>iPhone, iPad<br>ou Mac</h3>
-        <p>Téléchargez l'appli depuis l'App Store.</p>
-        <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206"><svg><use href="#apple"/></svg><span><small>Télécharger sur l'</small><b>App Store</b></span></a></div>
+      <div class="app reveal"><div class="big"><svg><use href="#apple"/></svg></div><h3 data-t="d1h">iPhone, iPad<br>ou Mac</h3>
+        <p data-t="d1p">Téléchargez l'appli depuis l'App Store.</p>
+        <a class="badge" href="https://apps.apple.com/us/app/ben-tv/id6834144206"><svg><use href="#apple"/></svg><span><small data-t="bApp">Télécharger sur l'</small><b>App Store</b></span></a></div>
       <div class="app reveal"><div class="big"><svg class="dev" viewBox="0 0 40 72" aria-hidden="true"><defs><linearGradient id="gp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3fa9ff"/><stop offset=".55" stop-color="#7b5cff"/><stop offset="1" stop-color="#ff4fa3"/></linearGradient><linearGradient id="gb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a4a5a"/><stop offset=".5" stop-color="#202028"/><stop offset="1" stop-color="#3a3a48"/></linearGradient></defs>
           <rect x="38.6" y="15" width="1.4" height="9" rx=".7" fill="#7a7a8c"/><rect x="38.6" y="27" width="1.4" height="5" rx=".7" fill="#7a7a8c"/>
           <rect x="1" y="1" width="38" height="70" rx="7" fill="url(#gb)" stroke="#9a9ab0" stroke-width=".8"/>
@@ -272,11 +275,11 @@
           <g fill="#fff" fill-opacity=".9"><rect x="7" y="14" width="6" height="6" rx="1.6"/><rect x="17" y="14" width="6" height="6" rx="1.6"/><rect x="27" y="14" width="6" height="6" rx="1.6"/>
           <rect x="7" y="24" width="6" height="6" rx="1.6"/><rect x="17" y="24" width="6" height="6" rx="1.6"/><rect x="27" y="24" width="6" height="6" rx="1.6"/>
           <rect x="7" y="34" width="6" height="6" rx="1.6"/><rect x="17" y="34" width="6" height="6" rx="1.6"/><rect x="27" y="34" width="6" height="6" rx="1.6"/></g>
-          <rect x="6" y="57" width="28" height="8" rx="3" fill="#fff" fill-opacity=".25"/><rect x="14" y="66.3" width="12" height="1" rx=".5" fill="#fff" fill-opacity=".7"/></svg></div><h3>Téléphone ou<br>box Android</h3>
-        <p>Téléchargez l'appli puis ouvrez le fichier.</p>
-        <a class="badge" href="https://go.aftvnews.com/1960385"><svg><use href="#android"/></svg><span><small>Télécharger pour</small><b>Android</b></span></a></div>
-      <div class="app reveal"><div class="big"><div class="bigtv" aria-hidden="true"><div>Fire TV</div><i></i><i></i></div></div><h3>Fire TV<br>Stick</h3>
-        <p>Installez <strong>Downloader</strong> puis tapez le code</p>
+          <rect x="6" y="57" width="28" height="8" rx="3" fill="#fff" fill-opacity=".25"/><rect x="14" y="66.3" width="12" height="1" rx=".5" fill="#fff" fill-opacity=".7"/></svg></div><h3 data-t="d2h">Téléphone ou<br>box Android</h3>
+        <p data-t="d2p">Téléchargez l'appli puis ouvrez le fichier.</p>
+        <a class="badge" href="https://go.aftvnews.com/1960385"><svg><use href="#android"/></svg><span><small data-t="bFor">Télécharger pour</small><b>Android</b></span></a></div>
+      <div class="app reveal"><div class="big"><div class="bigtv" aria-hidden="true"><div>Fire TV</div><i></i><i></i></div></div><h3 data-t="d3h">Fire TV<br>Stick</h3>
+        <p data-t="d3p">Installez <strong>Downloader</strong> puis tapez le code</p>
         <a class="code" href="https://go.aftvnews.com/1960385" aria-label="Code Downloader 1960385">1960385</a></div>
       <div class="app reveal"><div class="big"><svg class="dev" viewBox="0 0 96 64" aria-hidden="true"><defs><linearGradient id="gw" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b2f7a"/><stop offset=".6" stop-color="#1f74d6"/><stop offset="1" stop-color="#6fc3ff"/></linearGradient><linearGradient id="gk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2e3ec"/><stop offset="1" stop-color="#9c9eae"/></linearGradient></defs>
           <rect x="12" y="2" width="72" height="49" rx="3.5" fill="#15151c" stroke="#8a8aa0" stroke-width=".8"/>
@@ -284,9 +287,9 @@
           <g fill="#fff" fill-opacity=".92"><path d="M41 19.2l6.3-.9v6.1H41zM48.2 18.2l7.8-1.1v7.3h-7.8zM41 25.3h6.3v6.1l-6.3-.9zM48.2 25.3H56v7.3l-7.8-1.1z"/></g>
           <rect x="15" y="43.5" width="66" height="3.5" fill="#000" fill-opacity=".35"/><circle cx="48" cy="3.6" r=".7" fill="#444"/>
           <path d="M3 51.5h90l-5 7.5c-.7 1-1.8 1.5-3 1.5H11c-1.2 0-2.3-.5-3-1.5z" fill="url(#gk)"/>
-          <rect x="40" y="51.5" width="16" height="2" rx="1" fill="#7c7e90"/></svg></div><h3>Ordinateur<br>Windows</h3>
-        <p>Téléchargez l'installateur puis ouvrez-le.</p>
-        <a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1"><svg><use href="#windows"/></svg><span><small>Télécharger pour</small><b>PC Windows</b></span></a></div>
+          <rect x="40" y="51.5" width="16" height="2" rx="1" fill="#7c7e90"/></svg></div><h3 data-t="d4h">Ordinateur<br>Windows</h3>
+        <p data-t="d4p">Téléchargez l'installateur puis ouvrez-le.</p>
+        <a class="badge" href="https://www.dropbox.com/scl/fi/fwsq0okd6bqlzklbcfebw/Ben-TV-Setup.exe?rlkey=4qy8rkld8zl36kuprn8g1kz1v&amp;dl=1"><svg><use href="#windows"/></svg><span><small data-t="bFor">Télécharger pour</small><b>PC Windows</b></span></a></div>
     </div>
   </div>
 </section>
@@ -294,26 +297,27 @@
 <section id="assistance" class="faq">
   <div class="fond-cols" id="fondCols" aria-hidden="true"></div>
   <div class="wrap">
-    <h2 class="title reveal">Assistance</h2>
+    <h2 class="title reveal" data-t="sTitle">Assistance</h2>
     <div class="card reveal">
-      <h3>Bien démarrer</h3>
-      <p>Ouvrez Ben TV, entrez l'adresse de votre playlist M3U ou les identifiants Xtream donnés par votre fournisseur, puis touchez « Ajouter ». Pour essayer sans abonnement, une liste de démonstration de vidéos libres : <code>https://blenevez-apptv.github.io/ben-tv/demo.m3u</code></p>
-      <p><strong>« Erreur réseau » ou chaîne indisponible :</strong> vérifiez l'adresse du serveur (avec <code>http://</code> et le port) et votre connexion. Dans Paramètres, « Format du flux » et « Mémoire tampon » peuvent améliorer la lecture.</p>
-      <p><strong>Image dans l'image :</strong> dans Paramètres &gt; Lecteur, choisissez « Apple ».</p>
-      <p><strong>Une question, un souci ?</strong> Utilisez la tuile « Support » dans les Paramètres de l'appli, ou écrivez à <a href="mailto:bentv.assistance@gmail.com">bentv.assistance@gmail.com</a>.</p>
+      <h3 data-t="sH">Bien démarrer</h3>
+      <p data-t="s1">Ouvrez Ben TV, entrez l'adresse de votre playlist M3U ou les identifiants Xtream donnés par votre fournisseur, puis touchez « Ajouter ». Pour essayer sans abonnement, une liste de démonstration de vidéos libres : <code>https://blenevez-apptv.github.io/ben-tv/demo.m3u</code></p>
+      <p data-t="s2"><strong>« Erreur réseau » ou chaîne indisponible :</strong> vérifiez l'adresse du serveur (avec <code>http://</code> et le port) et votre connexion. Dans Paramètres, « Format du flux » et « Mémoire tampon » peuvent améliorer la lecture.</p>
+      <p data-t="s3"><strong>Image dans l'image :</strong> dans Paramètres &gt; Lecteur, choisissez « Apple ».</p>
+      <p data-t="s4"><strong>Une question, un souci ?</strong> Utilisez la tuile « Support » dans les Paramètres de l'appli, ou écrivez à <a href="mailto:bentv.assistance@gmail.com">bentv.assistance@gmail.com</a>.</p>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    <p>Ben TV ne fournit aucune chaîne, aucun film ni aucun abonnement : il lit uniquement les playlists dont vous avez les droits d'utilisation. Ben TV n'est affilié à aucun fournisseur de contenu.</p>
-    <p>Fiches films et séries : ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</p>
-    <p>Apple, le logo Apple et App Store sont des marques d'Apple Inc. Android est une marque de Google LLC. Windows est une marque de Microsoft Corporation.</p>
-    <p><a href="confidentialite.html">Confidentialité</a> · <a href="mailto:bentv.assistance@gmail.com">Contact</a> · © 2026 Benjamin Le Nevez</p>
+    <p data-t="f1">Ben TV ne fournit aucune chaîne, aucun film ni aucun abonnement : il lit uniquement les playlists dont vous avez les droits d'utilisation. Ben TV n'est affilié à aucun fournisseur de contenu.</p>
+    <p data-t="f2">Fiches films et séries : ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.</p>
+    <p data-t="f3">Apple, le logo Apple et App Store sont des marques d'Apple Inc. Android est une marque de Google LLC. Windows est une marque de Microsoft Corporation.</p>
+    <p><a href="confidentialite.html" data-t="f4a">Confidentialité</a> · <a href="mailto:bentv.assistance@gmail.com" data-t="f4b">Contact</a> · © 2026 Benjamin Le Nevez</p>
   </div>
 </footer>
 
+<script src="i18n.js"></script>
 <script>
   const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -323,7 +327,7 @@
 
   // Haut de page : nuage 3D d'écrans qui suit la souris ; au centre, un grand téléphone se retourne
   // pour montrer chaque écran (tout seul toutes les 4 s, ou au survol d'un onglet / d'une miniature).
-  const textes = {
+  let textes = {
     accueil: ['Toute votre TV.', 'En un seul endroit.', "Ben TV lit vos playlists M3U et vos comptes Xtream : TV en direct, films, séries, replay et guide des programmes. Gratuit, sans publicité, sans compte."],
     guide: ['Ne ratez plus', 'rien en direct.', "Le guide des programmes en grille, la ligne « maintenant », et le replay quand votre fournisseur le propose."],
     film: ['Films et séries', 'à volonté.', "Fiches complètes : bande-annonce, acteurs, sagas et idées « dans le même genre »."],
@@ -384,7 +388,34 @@
   (function nuage() { t0 += .01;
     monde.style.transform = `rotateY(${gx * 46 + Math.sin(t0) * 7}deg) rotateX(${-gy * 30 + Math.cos(t0 * .8) * 4}deg)`;
     if (!calme) requestAnimationFrame(nuage); })();
-  if (matchMedia('(hover: none)').matches) document.getElementById('hint').textContent = 'Touchez un onglet ou un écran pour le découvrir.';
+
+  // Langues : les 10 de l'appli. Par défaut ?lang=xx, puis le dernier choix, puis la langue de l'appareil, sinon le français.
+  const LANGS = { fr:'Français', en:'English', ar:'العربية', es:'Español', de:'Deutsch', it:'Italiano', pt:'Português', tr:'Türkçe', nl:'Nederlands', pl:'Polski' };
+  const DEMO = '<code>https://blenevez-apptv.github.io/ben-tv/demo.m3u</code>', MAIL = '<a href="mailto:bentv.assistance@gmail.com">bentv.assistance@gmail.com</a>';
+  const hint = document.getElementById('hint'), desc = document.querySelector('meta[name=description]'), sel = document.getElementById('lang');
+  const FR = { docTitle:document.title, docDesc:desc.content, hint:hint.textContent, hintTouch:'Touchez un onglet ou un écran pour le découvrir.', hero:textes };
+  document.querySelectorAll('[data-t]').forEach(e => FR[e.dataset.t] ??= e.innerHTML);
+  document.querySelectorAll('[data-ta]').forEach(e => { const [a, k] = e.dataset.ta.split(':'); FR[k] ??= e.getAttribute(a); });
+  let langActuelle = 'fr';
+  function langue(l) {
+    const d = { ...FR, ...T[l] };   // un texte manquant reste en français
+    document.documentElement.lang = l; document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(e => e.innerHTML = d[e.dataset.t].replace('{demo}', DEMO).replace('{mail}', MAIL));
+    document.querySelectorAll('[data-ta]').forEach(e => { const [a, k] = e.dataset.ta.split(':'); e.setAttribute(a, d[k]); });
+    document.title = d.docTitle; desc.content = d.docDesc;
+    hint.textContent = matchMedia('(hover: none)').matches ? d.hintTouch : d.hint;
+    const dossier = l === 'fr' ? 'img/' : `img/${l}/`;   // images de chaque langue : img/xx/ (visuels-site.ps1)
+    document.querySelectorAll('.mini, .face, .fond-cols img').forEach(i => i.src = i.getAttribute('src').replace(/img\/([a-z]{2}\/)?/, dossier));
+    minis.forEach(m => m.alt =document.querySelector(`[data-t="tab_${m.dataset.k}"]`).textContent);
+    textes = d.hero;
+    if (l !== langActuelle) { langActuelle = l; shown = null; texte(ordre[courant]); }
+    sel.value = l;
+  }
+  sel.innerHTML = Object.entries(LANGS).map(([k, n]) => `<option value="${k}" lang="${k}">${n}</option>`).join('');
+  sel.addEventListener('change', () => { langue(sel.value); try { localStorage.setItem('lang', sel.value); } catch {} });
+  let dernier; try { dernier = localStorage.getItem('lang'); } catch {}
+  const appareil = (navigator.languages || [navigator.language]).map(x => (x || '').slice(0, 2).toLowerCase());
+  langue([new URLSearchParams(location.search).get('lang'), dernier, ...appareil].find(x => LANGS[x]) || 'fr');
 
   // Assistance : colonnes d'écrans qui défilent derrière (autant de colonnes que la largeur le permet).
   const fond = document.getElementById('fondCols'), tous = minis.map(m => m.getAttribute('src'));
