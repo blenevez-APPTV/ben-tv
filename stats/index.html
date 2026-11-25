@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ben TV · Fréquentation du site</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="https://blenevez-apptv.github.io/ben-tv/img/logo.png">
+<style>
+  :root {
+    color-scheme: light;
+    --fond: #f4f3ef; --carte: #fcfcfb; --trait: #e4e2dc;
+    --texte: #0b0b0b; --texte-2: #52514e; --texte-3: #7a7974;
+    --accent: #2a78d6; --accent-doux: #d6e6f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --fond: #111110; --carte: #1a1a19; --trait: #2e2d2b;
+      --texte: #f0efec; --texte-2: #c3c2b7; --texte-3: #8f8e86;
+      --accent: #3987e5; --accent-doux: #1f3550;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fond); color: var(--texte); font: 16px/1.45 "Segoe UI", system-ui, sans-serif; }
+  main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 48px; }
+  header { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; }
+  header img { width: 52px; height: 52px; border-radius: 12px; }
+  h1 { font-size: 26px; margin: 0; }
+  .maj { color: var(--texte-2); font-size: 14px; margin: 2px 0 0; }
+  .periodes[hidden], .actu[hidden] { display: none; }
+  .periodes { margin-left: auto; display: flex; background: var(--carte); border: 1px solid var(--trait); border-radius: 999px; padding: 4px; }
+  .periodes button { border: 0; background: none; color: var(--texte-2); font: inherit; font-size: 15px; padding: 8px 18px; border-radius: 999px; cursor: pointer; }
+  .periodes button[aria-pressed="true"] { background: var(--accent); color: #fff; font-weight: 600; }
+  .actu { border: 1px solid var(--trait); background: var(--carte); color: var(--texte); font: inherit; font-size: 15px; padding: 8px 16px; border-radius: 999px; cursor: pointer; }
+  #cle input { width: 100%; font: inherit; padding: 12px; border: 1px solid var(--trait); border-radius: 10px; background: var(--fond); color: var(--texte); margin: 12px 0; }
+  #cle button { border: 0; background: var(--accent); color: #fff; font: inherit; font-weight: 600; padding: 12px 22px; border-radius: 999px; cursor: pointer; }
+  @media (max-width: 520px) { main { padding: 20px 14px 40px; } .tuile .val { font-size: 32px; } h1 { font-size: 22px; } }
+  .essai { background: #fff3cd; color: #5c4400; padding: 10px 14px; border-radius: 10px; margin-bottom: 20px; }
+  .tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .carte { background: var(--carte); border: 1px solid var(--trait); border-radius: 16px; padding: 20px 22px; }
+  .tuile .lib { color: var(--texte-2); font-size: 15px; }
+  .tuile .val { font-size: 40px; font-weight: 700; line-height: 1.1; margin-top: 6px; font-variant-numeric: tabular-nums; }
+  .tuile .sous { color: var(--texte-3); font-size: 14px; margin-top: 4px; }
+  h2 { font-size: 18px; margin: 0 0 14px; }
+  .graph { position: relative; }
+  .graph svg { display: block; width: 100%; height: 240px; overflow: visible; }
+  .graph text { fill: var(--texte-3); font-size: 12px; }
+  .graph .barre { fill: var(--accent); }
+  .graph .zone:hover + .barre, .graph .barre.on { fill: color-mix(in srgb, var(--accent) 75%, var(--texte)); }
+  .bulle { position: absolute; pointer-events: none; background: var(--texte); color: var(--carte); padding: 6px 10px; border-radius: 8px; font-size: 14px; white-space: nowrap; transform: translate(-50%, -110%); display: none; }
+  .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  @media (max-width: 760px) { .deux { grid-template-columns: 1fr; } .periodes { margin-left: 0; } }
+  .ligne { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--trait); }
+  .ligne:first-of-type { border-top: 0; }
+  .ligne .nom { font-weight: 500; }
+  .ligne .nb { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ligne .jauge { grid-column: 2 / 4; height: 6px; background: var(--accent-doux); border-radius: 3px; overflow: hidden; }
+  .ligne .jauge i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+  .ligne .det { grid-column: 2 / 4; color: var(--texte-2); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 14px; }
+  .drap { width: 24px; height: 18px; border-radius: 3px; object-fit: cover; box-shadow: 0 0 0 1px var(--trait); }
+  .det .drap { width: 18px; height: 13px; vertical-align: -2px; margin-right: 4px; }
+  .ico { font-size: 20px; text-align: center; }
+  .vide { color: var(--texte-3); font-style: italic; }
+  .note { color: var(--texte-3); font-size: 14px; margin-top: 24px; }
+  details { margin-top: 12px; color: var(--texte-2); font-size: 14px; }
+  table { border-collapse: collapse; margin-top: 8px; }
+  td, th { padding: 2px 14px 2px 0; text-align: left; }
+  td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="https://blenevez-apptv.github.io/ben-tv/img/logo.png" alt="">
+    <div><h1>Fréquentation du site Ben TV</h1><p class="maj" id="maj"></p></div>
+    <div class="periodes" role="group" aria-label="Période">
+      <button data-p="7j">7 jours</button><button data-p="30j">30 jours</button><button data-p="12m">12 mois</button>
+    </div>
+    <button class="actu" id="actu" hidden>↻ Actualiser</button>
+  </header>
+  <div id="essai" class="essai" hidden>Données d'essai inventées : la vraie page s'affichera quand la clé GoatCounter sera en place.</div>
+
+  <section class="carte" id="cle" hidden>
+    <h2>Clé GoatCounter</h2>
+    <p id="cle-msg" style="margin:0;color:var(--texte-2)">Collez ici la clé « Tableau PC » (GoatCounter → votre adresse e-mail → API → show). Elle reste sur cet appareil.</p>
+    <form id="cle-form"><input id="cle-val" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Clé API"><button>Valider</button></form>
+  </section>
+  <div id="contenu">
+  <section class="tuiles">
+    <div class="carte tuile"><div class="lib">Visiteurs</div><div class="val" id="t-vis"></div><div class="sous" id="t-vis-s"></div></div>
+    <div class="carte tuile"><div class="lib">Téléchargements</div><div class="val" id="t-tel"></div><div class="sous">clics sur « Télécharger »</div></div>
+    <div class="carte tuile"><div class="lib">Pays</div><div class="val" id="t-pays"></div><div class="sous" id="t-pays-s"></div></div>
+    <div class="carte tuile"><div class="lib">Meilleur jour</div><div class="val" id="t-best"></div><div class="sous" id="t-best-s"></div></div>
+  </section>
+
+  <section class="carte">
+    <h2 id="titre-graph"></h2>
+    <div class="graph"><svg id="graph" role="img"></svg><div class="bulle" id="bulle"></div></div>
+    <details><summary>Voir en tableau</summary><table id="tableau"></table></details>
+  </section>
+
+  <div class="deux">
+    <section class="carte"><h2>Téléchargements par appli</h2><div id="tel"></div></section>
+    <section class="carte"><h2>Pays des visiteurs</h2><div id="pays"></div></section>
+  </div>
+  <div class="deux">
+    <section class="carte"><h2>Pages visitées</h2><div id="pages"></div></section>
+    <section class="carte"><h2>Bon à savoir</h2>
+      <p style="margin:0;color:var(--texte-2)">Un visiteur qui revient plusieurs fois le même jour compte une fois. Les personnes avec un bloqueur de publicité et celles qui tapent le code Downloader directement sur leur télé ne sont pas comptées. « App Store » compte les clics vers la fiche, pas les installations (voir App Store Connect).</p>
+    </section>
+  </div>
+  <p class="note" id="note">Pour mettre à jour les chiffres : double-cliquez « Statistiques du site » dans le dossier BEN TV. Données : ben-tv.goatcounter.com</p>
+  </div>
+</main>
+
+<script>
+const D = /*DONNEES*/null || {};
+const nf = new Intl.NumberFormat('fr-FR');
+const nomsPays = new Intl.DisplayNames(['fr'], { type: 'region' });
+const APPLIS = {
+  'telechargement-apple': ['🍎', 'iPhone, iPad, Apple TV', 'App Store'],
+  'telechargement-android': ['🤖', 'Android, Fire TV', 'code Downloader'],
+  'telechargement-pc': ['💻', 'PC Windows', 'installeur'],
+  'telechargement-famille-iphone': ['👪', 'iPhone famille', 'page famille'],
+};
+const PAGES = { '/ben-tv/': 'Accueil', '/ben-tv/famille/': 'Page famille', '/ben-tv/confidentialite.html': 'Confidentialité' };
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const pays = id => id ? (nomsPays.of(id) || id) : 'Inconnu';
+const drap = (id, cls = 'drap') => id && /^[A-Z]{2}$/.test(id)
+  ? `<img class="${cls}" src="https://flagcdn.com/w40/${id.toLowerCase()}.png" alt="" onerror="this.style.visibility='hidden'">`
+  : `<span class="${cls}" style="display:inline-block;text-align:center">🌐</span>`;
+const somme = a => a.reduce((x, y) => x + y, 0);
+
+function parJour(liste, debut, nbJours) {
+  const m = new Map();
+  for (const h of liste) for (const s of h.stats || []) m.set(s.day, (m.get(s.day) || 0) + s.daily);
+  const out = [], d0 = new Date(debut + 'T12:00:00');
+  for (let i = 0; i < nbJours; i++) {
+    const d = new Date(d0); d.setDate(d0.getDate() + i);
+    const k = d.toISOString().slice(0, 10);
+    out.push({ date: d, n: m.get(k) || 0 });
+  }
+  return out;
+}
+
+function afficher(p) {
+  document.querySelectorAll('.periodes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === p));
+  const P = D[p], jours = JOURS[p];
+  const visites = somme(P.pages.map(h => h.count)), tel = somme(P.clics.map(h => h.count));
+  const jj = parJour(P.pages, P.debut, jours);
+  const best = jj.reduce((a, b) => b.n > a.n ? b : a, jj[0]);
+
+  $('t-vis').textContent = nf.format(visites);
+  $('t-vis-s').textContent = `soit ${nf.format(Math.round(visites / jours * 10) / 10)} par jour en moyenne`;
+  $('t-tel').textContent = nf.format(tel);
+  const lp = P.pays.filter(x => x.id);
+  $('t-pays').textContent = nf.format(lp.length);
+  $('t-pays-s').textContent = lp.length ? `en tête : ${pays(lp[0].id)}` : '—';
+  $('t-best').textContent = best && best.n ? nf.format(best.n) : '—';
+  $('t-best-s').textContent = best && best.n ? best.date.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' }) : 'pas encore de visite';
+
+  // Graphique : par jour, ou par mois pour 12 mois
+  let barres = jj.map(x => ({ lib: x.date.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric', month: 'short' }), court: x.date.toLocaleDateString('fr-FR', jours === 7 ? { weekday: 'short', day: 'numeric' } : { day: 'numeric', month: 'short' }), n: x.n }));
+  if (p === '12m') {
+    const m = new Map();
+    for (const x of jj) { const k = x.date.getFullYear() * 12 + x.date.getMonth(); if (!m.has(k)) m.set(k, { d: x.date, n: 0 }); m.get(k).n += x.n; }
+    barres = [...m.values()].map(x => ({ lib: x.d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' }), court: x.d.toLocaleDateString('fr-FR', { month: 'short' }), n: x.n }));
+  }
+  $('titre-graph').textContent = p === '12m' ? 'Visiteurs par mois' : 'Visiteurs par jour';
+  dessiner(barres);
+
+  // Téléchargements par appli (toujours les 4, même à zéro)
+  const clics = Object.keys(APPLIS).map(k => P.clics.find(c => c.path === k) || { path: k, count: 0, pays: [] });
+  const maxT = Math.max(1, ...clics.map(c => c.count));
+  $('tel').innerHTML = clics.map(c => {
+    const [ico, nom, via] = APPLIS[c.path];
+    const det = (c.pays || []).slice(0, 4).map(x => `<span>${drap(x.id, 'drap')}${esc(pays(x.id))} ${nf.format(x.count)}</span>`).join('');
+    return `<div class="ligne"><span class="ico">${ico}</span><span class="nom">${nom} <span style="color:var(--texte-3);font-weight:400">· ${via}</span></span><span class="nb">${nf.format(c.count)}</span>
+      <span class="jauge"><i style="width:${c.count / maxT * 100}%"></i></span>${det ? `<span class="det">${det}</span>` : ''}</div>`;
+  }).join('');
+
+  // Pays
+  const maxP = Math.max(1, ...P.pays.map(x => x.count));
+  $('pays').innerHTML = P.pays.length ? P.pays.slice(0, 15).map(x => `<div class="ligne">${drap(x.id)}<span class="nom">${esc(pays(x.id))}</span><span class="nb">${nf.format(x.count)}</span>
+      <span class="jauge"><i style="width:${x.count / maxP * 100}%"></i></span></div>`).join('') : '<p class="vide">Pas encore de visite sur cette période.</p>';
+
+  // Pages
+  const maxG = Math.max(1, ...P.pages.map(x => x.count));
+  $('pages').innerHTML = P.pages.length ? P.pages.map(x => `<div class="ligne"><span class="ico">📄</span><span class="nom">${esc(PAGES[x.path] || x.path)}</span><span class="nb">${nf.format(x.count)}</span>
+      <span class="jauge"><i style="width:${x.count / maxG * 100}%"></i></span></div>`).join('') : '<p class="vide">Pas encore de visite sur cette période.</p>';
+}
+
+function dessiner(b) {
+  const svg = $('graph'), W = svg.clientWidth || 1000, H = 240, bas = 24, haut = 18, g = 40;
+  const max = Math.max(1, ...b.map(x => x.n));
+  const pas = Math.pow(10, Math.floor(Math.log10(max))); const top = Math.ceil(max / pas) * pas;
+  const larg = (W - g) / b.length, bar = Math.max(2, Math.min(48, larg - 4));
+  const y = n => H - bas - (n / top) * (H - bas - haut);
+  let s = '';
+  for (const v of [0, top / 2, top]) s += `<line x1="${g}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="var(--trait)"/><text x="${g - 8}" y="${y(v) + 4}" text-anchor="end">${nf.format(v)}</text>`;
+  const chaque = Math.ceil(b.length / Math.max(3, Math.floor(W / 75)));
+  b.forEach((x, i) => {
+    const cx = g + larg * i + larg / 2, hBar = Math.max(x.n ? 3 : 0, H - bas - y(x.n));
+    s += `<rect class="zone" data-i="${i}" x="${g + larg * i}" y="${haut}" width="${larg}" height="${H - bas - haut}" fill="transparent"/>`;
+    s += `<rect class="barre" x="${cx - bar / 2}" y="${H - bas - hBar}" width="${bar}" height="${hBar}" rx="${Math.min(4, bar / 2)}" pointer-events="none"/>`;
+    if (i % chaque === 0) s += `<text x="${cx}" y="${H - 6}" text-anchor="middle">${esc(x.court)}</text>`;
+  });
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('aria-label', `${b.length} barres, maximum ${nf.format(max)}`);
+  svg.innerHTML = s;
+  const bulle = $('bulle');
+  svg.querySelectorAll('.zone').forEach(z => {
+    z.addEventListener('mouseenter', () => {
+      const x = b[z.dataset.i], i = +z.dataset.i;
+      bulle.innerHTML = `<b>${nf.format(x.n)}</b> visiteur${x.n > 1 ? 's' : ''} · ${esc(x.lib)}`;
+      bulle.style.left = (g + larg * i + larg / 2) / W * 100 + '%';
+      bulle.style.top = y(x.n) / H * 240 + 'px';
+      bulle.style.display = 'block';
+    });
+    z.addEventListener('mouseleave', () => bulle.style.display = 'none');
+  });
+  $('tableau').innerHTML = '<tr><th>Période</th><th>Visiteurs</th></tr>' + b.map(x => `<tr><td>${esc(x.lib)}</td><td>${nf.format(x.n)}</td></tr>`).join('');
+}
+
+const JOURS = { '7j': 7, '30j': 30, '12m': 365 };
+let courant = '30j';
+
+// En ligne (téléphone…) : la page ne contient aucun chiffre, elle les lit chez GoatCounter avec la clé gardée sur l'appareil.
+const CLE = 'goatcounter-cle';
+const pause = ms => new Promise(r => setTimeout(r, ms));
+async function api(chemin, params) {
+  for (let i = 0; i < 4; i++) {
+    const r = await fetch(`https://ben-tv.goatcounter.com/api/v0/${chemin}?${new URLSearchParams(params)}`, { headers: { Authorization: 'Bearer ' + localStorage.getItem(CLE) } });
+    if (r.status === 429) { await pause(1500); continue; }
+    if (r.status === 401 || r.status === 403) { localStorage.removeItem(CLE); throw new Error('cle'); }
+    if (!r.ok) throw new Error('erreur ' + r.status);
+    await pause(260); // l'API accepte ~4 appels par seconde
+    return r.json();
+  }
+  throw new Error('trop d’appels, réessayez dans une minute');
+}
+async function charger(p) {
+  $('maj').textContent = 'Chargement des chiffres…';
+  try {
+    const now = new Date();
+    const debut = new Date(now - (JOURS[p] - 1) * 864e5).toISOString().slice(0, 10);
+    const q = { start: debut + 'T00:00:00Z', end: now.toISOString().slice(0, 13) + ':00:00Z' };
+    const hits = (await api('stats/hits', { ...q, limit: 100, daily: 'true' })).hits || [];
+    const pages = hits.filter(h => !h.event), clics = hits.filter(h => h.event);
+    const pays = pages.length ? (await api('stats/locations', { ...q, limit: 100, include_paths: pages.map(h => h.path_id).join(',') })).stats || [] : [];
+    for (const c of clics) c.pays = (await api('stats/locations', { ...q, limit: 100, include_paths: c.path_id })).stats || [];
+    D[p] = { debut, pages, clics, pays };
+    $('maj').textContent = 'Chiffres en direct · ' + now.toLocaleString('fr-FR', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' });
+    return true;
+  } catch (e) {
+    if (e.message === 'cle') demanderCle('Cette clé est refusée. Recopiez-la depuis GoatCounter (votre adresse e-mail → API → show).');
+    else $('maj').textContent = 'Impossible de lire les chiffres (' + e.message + '). Vérifiez la connexion internet.';
+    return false;
+  }
+}
+function demanderCle(msg) {
+  if (msg) $('cle-msg').textContent = msg;
+  $('contenu').hidden = true; $('cle').hidden = false; $('maj').textContent = '';
+  document.querySelector('.periodes').hidden = $('actu').hidden = true;
+  $('cle-val').focus();
+}
+$('cle-form').onsubmit = e => {
+  e.preventDefault();
+  const v = $('cle-val').value.trim();
+  if (!v) return;
+  localStorage.setItem(CLE, v); $('cle-val').value = '';
+  $('cle').hidden = true; $('contenu').hidden = false;
+  document.querySelector('.periodes').hidden = $('actu').hidden = false;
+  montrer(courant);
+};
+async function montrer(p) {
+  courant = p;
+  document.querySelectorAll('.periodes button').forEach(b => b.setAttribute('aria-pressed', b.dataset.p === p));
+  if (!D[p] && !(await charger(p))) return;
+  if (p === courant) afficher(p);
+}
+document.querySelectorAll('.periodes button').forEach(b => b.onclick = () => montrer(b.dataset.p));
+addEventListener('resize', () => D[courant] && afficher(courant));
+
+if (D.maj) {  // page fabriquée sur le PC par statistiques.py
+  $('maj').textContent = `Chiffres du ${D.maj}`;
+  $('essai').hidden = !D.essai;
+  afficher(courant);
+} else {
+  $('actu').hidden = false;
+  $('actu').onclick = () => { for (const k in JOURS) delete D[k]; montrer(courant); };
+  $('note').innerHTML = 'Page privée : sans la clé, elle n’affiche rien. <a href="#" id="oubli">Oublier la clé sur cet appareil</a>';
+  $('oubli').onclick = e => { e.preventDefault(); localStorage.removeItem(CLE); location.reload(); };
+  localStorage.getItem(CLE) ? montrer(courant) : demanderCle();
+}
+</script>
+</body>
+</html>
