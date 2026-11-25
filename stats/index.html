@@ -229,17 +229,17 @@ let courant = '30j';
 
 // En ligne (téléphone…) : la page ne contient aucun chiffre, elle les lit chez GoatCounter avec la clé gardée sur l'appareil.
 const CLE = 'goatcounter-cle';
-// Clé apportée par le QR code du PC (#cle=…) : le morceau après # n'est jamais envoyé au serveur ; on le garde puis on l'efface de l'adresse.
+// Clé apportée par le QR code du PC (#cle=…). Le morceau après # n'est jamais envoyé au serveur. On le laisse dans l'adresse :
+// Safari sur iPhone (navigation privée, icône d'écran d'accueil) peut oublier localStorage, l'adresse non.
 if (location.hash.startsWith('#cle=')) {
   localStorage.setItem(CLE, decodeURIComponent(location.hash.slice(5)));
-  history.replaceState(null, '', location.pathname);
 }
 const pause = ms => new Promise(r => setTimeout(r, ms));
 async function api(chemin, params) {
   for (let i = 0; i < 4; i++) {
     const r = await fetch(`https://ben-tv.goatcounter.com/api/v0/${chemin}?${new URLSearchParams(params)}`, { headers: { Authorization: 'Bearer ' + localStorage.getItem(CLE) } });
     if (r.status === 429) { await pause(1500); continue; }
-    if (r.status === 401 || r.status === 403) { localStorage.removeItem(CLE); throw new Error('cle'); }
+    if (r.status === 401 || r.status === 403) { localStorage.removeItem(CLE); history.replaceState(null, '', location.pathname); throw new Error('cle'); }
     if (!r.ok) throw new Error('erreur ' + r.status);
     await pause(260); // l'API accepte ~4 appels par seconde
     return r.json();
@@ -276,6 +276,7 @@ $('cle-form').onsubmit = e => {
   const v = $('cle-val').value.trim();
   if (!v) return;
   localStorage.setItem(CLE, v); $('cle-val').value = '';
+  history.replaceState(null, '', '#cle=' + encodeURIComponent(v));
   $('cle').hidden = true; $('contenu').hidden = false;
   document.querySelector('.periodes').hidden = $('actu').hidden = false;
   montrer(courant);
@@ -297,7 +298,7 @@ if (D.maj) {  // page fabriquée sur le PC par statistiques.py
   $('actu').hidden = false;
   $('actu').onclick = () => { for (const k in JOURS) delete D[k]; montrer(courant); };
   $('note').innerHTML = 'Page privée : sans la clé, elle n’affiche rien. <a href="#" id="oubli">Oublier la clé sur cet appareil</a>';
-  $('oubli').onclick = e => { e.preventDefault(); localStorage.removeItem(CLE); location.reload(); };
+  $('oubli').onclick = e => { e.preventDefault(); localStorage.removeItem(CLE); location.replace(location.pathname); };
   localStorage.getItem(CLE) ? montrer(courant) : demanderCle();
 }
 </script>
