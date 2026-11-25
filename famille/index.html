@@ -21,7 +21,7 @@
   <div><h1>Ben TV</h1><div class="petit">Version famille, iPhone et iPad · <span id="version">…</span></div></div>
 </header>
 
-<a class="bouton" href="itms-services://?action=download-manifest&amp;url=https://blenevez-apptv.github.io/ben-tv/famille/manifest.plist">Installer Ben TV</a>
+<a class="bouton" data-goatcounter-click="telechargement-famille-iphone" href="itms-services://?action=download-manifest&amp;url=https://blenevez-apptv.github.io/ben-tv/famille/manifest.plist">Installer Ben TV</a>
 <p class="petit">À ouvrir dans <strong>Safari</strong> sur l'iPhone ou l'iPad.</p>
 
 <h2>Comment faire</h2>
@@ -41,5 +41,6 @@ fetch('version.txt').then(r => r.ok ? r.text() : '').then(t => {
   document.getElementById('version').textContent = t.trim() ? 'version ' + t.trim() : '';
 }).catch(() => { document.getElementById('version').textContent = ''; });
 </script>
+<script data-goatcounter="https://ben-tv.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
