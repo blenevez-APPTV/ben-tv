@@ -229,6 +229,11 @@ let courant = '30j';
 
 // En ligne (téléphone…) : la page ne contient aucun chiffre, elle les lit chez GoatCounter avec la clé gardée sur l'appareil.
 const CLE = 'goatcounter-cle';
+// Clé apportée par le QR code du PC (#cle=…) : le morceau après # n'est jamais envoyé au serveur ; on le garde puis on l'efface de l'adresse.
+if (location.hash.startsWith('#cle=')) {
+  localStorage.setItem(CLE, decodeURIComponent(location.hash.slice(5)));
+  history.replaceState(null, '', location.pathname);
+}
 const pause = ms => new Promise(r => setTimeout(r, ms));
 async function api(chemin, params) {
   for (let i = 0; i < 4; i++) {
